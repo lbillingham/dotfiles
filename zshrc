@@ -117,11 +117,31 @@ function \$(){ "$@" }
 . /opt/homebrew/etc/profile.d/z.sh
 
 # python
+
+## python/pyenv
+
 export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+
+## after moving from virtualenvwrapper
+##  to pyenv and pyenv-virtualenv
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
+fi
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+
+alias workon="pyenv activate"
+
+## auto upgrade pip after making an new virtualenv
+### vim "$(pyenv root)/pyenv.d/virtualenv/after.bash"
+### and paste
+### ```bash
+### upgrade_packages() {
+###   PYENV_VERSION=$VIRTUALENV_NAME pyenv-exec pip install --upgrade pip setuptools wheel
+### }
+### after_virtualenv 'upgrade_packages'
+### ```
+
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -143,8 +163,6 @@ alias grep='egrep --color'
 alias gti='git'
 alias mkdire='mkdir'
 
-# python/pyenv
-alias workon="pyenv activate"
 
 # editors
 ## vscode
