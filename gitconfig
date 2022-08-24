@@ -15,8 +15,11 @@
 	commits-since-last-tag = "!git lg $(git describe --tags --abbrev=0)..HEAD"
 	pomain = pull origin main
 	pomaster = pull origin master
+  res = restore
 	show-tags-dates = log --tags --simplify-by-decoration --pretty='format:%ai %d'
 	st = status
+	sw = switch
+	swc = switch -C
 [help]
 	autocorrect = 5
 [pull]
